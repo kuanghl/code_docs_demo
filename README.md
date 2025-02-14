@@ -3,7 +3,8 @@ An example of setting up Sphinx for C/C++ and building with CMake and Read the D
 
 See the documentation [here](https://cpp-documentation-example.readthedocs.io/en/latest/)
 
-[refer](https://github.com/TartanLlama/cpp-documentation-example.git)
+[refer blog](https://devblogs.microsoft.com/cppblog/clear-functional-c-documentation-with-sphinx-breathe-doxygen-cmake/)
+[refer repository](https://github.com/TartanLlama/cpp-documentation-example.git)
 
 ## Dependencies.
 
