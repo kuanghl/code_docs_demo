@@ -4,12 +4,16 @@ find_package(Doxygen REQUIRED)
 if (DOXYGEN_FOUND)
     # 1. doxygen
     # set doxygen variables
+
+    # for Doxyfile
     set(DOXYGEN_PROJECT_NAME ${PROJECT_NAME})                       # PROJECT_NAME
     set(DOXYGEN_INPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../include)   # INPUT
     set(DOXYGEN_OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/doxygen)     # OUTPUT_DIRECTORY
-    set(DOXYGEN_INDEX_XML_FILE ${DOXYGEN_OUTPUT_DIR}/xml/index.xml)
+
+    # for cmake
     set(DOXYFILE_IN ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in)
     set(DOXYFILE_OUT ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
+    set(DOXYGEN_INDEX_XML_FILE ${DOXYGEN_OUTPUT_DIR}/xml/index.xml)
 
     # Doxygen won't create this for us
     file(MAKE_DIRECTORY ${DOXYGEN_OUTPUT_DIR}) 
