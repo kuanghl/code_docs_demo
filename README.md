@@ -52,6 +52,7 @@ pip install sphinx_rtd_theme breathe Sphinx myst_parser -i https://pypi.tuna.tsi
 ```sh
 # 配置.readthedocs.yaml并推送到github
 # 打开https://readthedocs.org/dashboard/托管github项目即可
+# 需要按F5刷新缓存
 ```
 
 ## KeyWords.

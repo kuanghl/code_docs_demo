@@ -20,18 +20,20 @@ def configureDoxyfile(input_dir, output_dir, project_name):
 	with open('Doxyfile', 'w') as file:
 		file.write(filedata)
 
-# Check if we're running on Read the Docs' servers
-read_the_docs_build = os.environ.get('READTHEDOCS', None) == 'True'
+def generatexml():
+    # Check if we're running on Read the Docs' servers
+    read_the_docs_build = os.environ.get('READTHEDOCS', None) == 'True'
 
-breathe_projects = {}
-if read_the_docs_build:
-    input_dir = '../include'
-    output_dir = 'build'
-    project_name = 'code_docs_demo'
-    configureDoxyfile(input_dir, output_dir, project_name)
-    subprocess.call('doxygen', shell=True)
-    breathe_projects['code_docs_demo'] = output_dir + '/xml'
+    breathe_projects = {}
+    if read_the_docs_build:
+        input_dir = '../include'
+        output_dir = 'build'
+        project_name = 'code_docs_demo'
+        configureDoxyfile(input_dir, output_dir, project_name)
+        subprocess.call('doxygen', shell=True)
+        breathe_projects['code_docs_demo'] = output_dir + '/xml'
         
+generatexml()
 
 # -- Project information for CMake -----------------------------------------------------
  
