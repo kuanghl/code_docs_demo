@@ -32,6 +32,8 @@ def generatexml():
         configureDoxyfile(input_dir, output_dir, project_name)
         subprocess.call('doxygen', shell=True)
         breathe_projects['code_docs_demo'] = output_dir + '/xml'
+        
+generatexml()
 
 # -- Project information for CMake -----------------------------------------------------
  
@@ -55,9 +57,6 @@ source_suffix = {
     '.rst': 'restructuredtext',
     '.md': 'markdown',
 }
-
-# -- Generate XML for rtd-------------------------------------------------
-generatexml()
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output

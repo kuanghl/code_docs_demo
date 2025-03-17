@@ -170,18 +170,6 @@ void func3() {}
  * 
  * @n
  * 
- * +-------------------+-------------------+
- * | Grid Tables       | Are Beautiful     |
- * +===================+===================+
- * | Easy to read      | In code and docs  |
- * +-------------------+-------------------+
- * | Exceptionally flexible and powerful   |
- * +-------+-------+-------+-------+-------+
- * | Col 1 | Col 2 | Col 3 | Col 4 | Col 5 |
- * +-------+-------+-------+-------+-------+
- * 
- * @n
- * 
  * @link https://mcresearch.github.io/abacus-user-guide/develop-dox.html
  */
 void func4() {}
