@@ -47,6 +47,13 @@ pip install sphinx_rtd_theme breathe Sphinx myst_parser -i https://pypi.tuna.tsi
 # Sphinx使用Breathe插件解析的xml文档素材,以及解析现成的reStructureText文档,生成最后的HTML或者其他文档类型.
 ```
 
+## Read the Docs.
+
+```sh
+# 配置.readthedocs.yaml并推送到github
+# 打开https://readthedocs.org/dashboard/托管github项目即可
+```
+
 ## KeyWords.
 
 ```sh
@@ -62,3 +69,5 @@ pip install sphinx_rtd_theme breathe Sphinx myst_parser -i https://pypi.tuna.tsi
 
 # 
 ```
+
+![Read The Docs Building](https://cdn.jsdelivr.net/gh/kuanghl/pictures_bed/images/20250214124513.png)
