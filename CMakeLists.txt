@@ -4,3 +4,4 @@ project(code_docs_demo)
 
 # build
 add_subdirectory(docs)
+add_subdirectory(local_docs)

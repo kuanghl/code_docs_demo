@@ -7,7 +7,7 @@ if (DOXYGEN_FOUND)
 
     # for Doxyfile
     set(DOXYGEN_PROJECT_NAME ${PROJECT_NAME})                       # PROJECT_NAME
-    set(DOXYGEN_INPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../include)   # INPUT
+    set(DOXYGEN_INPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../include)   # INPUT_DIRECTORY
     set(DOXYGEN_OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/doxygen)     # OUTPUT_DIRECTORY
 
     # for cmake
