@@ -23,29 +23,36 @@
 
 #include "ll_win.h"
 
-/* Cdev IOCTL codes */
-#define RPP_IOCTL_START					    CTL_CODE(FILE_DEVICE_RPP, 0x900, METHOD_BUFFERED, FILE_ANY_ACCESS)      /* start cdev IOCTL */
-#define RPP_IOCTL_GETPARAM				    CTL_CODE(FILE_DEVICE_RPP, 0x901, METHOD_BUFFERED, FILE_ANY_ACCESS)      /* get some information from the card */
-#define RPP_IOCTL_BAR_MAP  				    CTL_CODE(FILE_DEVICE_RPP, 0x902, METHOD_BUFFERED, FILE_ANY_ACCESS)      /* Bar map into User state */
-#define RPP_IOCTL_BAR_UNMAP  			    CTL_CODE(FILE_DEVICE_RPP, 0x903, METHOD_BUFFERED, FILE_ANY_ACCESS)	    /* Bar unmap User state */
-#define RPP_IOCTL_KERNEL_MEM_ALLOC		    CTL_CODE(FILE_DEVICE_RPP, 0x904, METHOD_BUFFERED, FILE_ANY_ACCESS)		/* Kernel memory use in PCIE DMA alloc(others memory alloc need to realize) */
-#define RPP_IOCTL_KERNEL_MEM_FREE		    CTL_CODE(FILE_DEVICE_RPP, 0x905, METHOD_BUFFERED, FILE_ANY_ACCESS)		/* Kernel memory use in PCIE DMA free(others memory free need to realize) */
-#define RPP_IOCTL_KERNEL_MEM_MAP		    CTL_CODE(FILE_DEVICE_RPP, 0x906, METHOD_BUFFERED, FILE_ANY_ACCESS)		/* Kernel memory map into User state */
-#define RPP_IOCTL_KERNEL_MEM_UNMAP		    CTL_CODE(FILE_DEVICE_RPP, 0x907, METHOD_BUFFERED, FILE_ANY_ACCESS)		/* Kernel memory unmap User state */
-#define RPP_IOCTL_USER_MEM_MAP			    CTL_CODE(FILE_DEVICE_RPP, 0x908, METHOD_BUFFERED, FILE_ANY_ACCESS)		/* User memory map into Kernel state */
-#define RPP_IOCTL_USER_MEM_UNMAP		    CTL_CODE(FILE_DEVICE_RPP, 0x909, METHOD_BUFFERED, FILE_ANY_ACCESS)		/* User memory unmap Kernel state */
-#define RPP_IOCTL_USER_EVENTS_REGISTER	    CTL_CODE(FILE_DEVICE_RPP, 0x90a, METHOD_BUFFERED, FILE_ANY_ACCESS)		/* User EventRegister for Kernel state */
-#define RPP_IOCTL_USER_EVENTS_UNREGISTER    CTL_CODE(FILE_DEVICE_RPP, 0x90b, METHOD_BUFFERED, FILE_ANY_ACCESS)		/* User EventUnregister for Kernel state */	
-#define RPP_IOCTL_XFER_TO_DEV               CTL_CODE(FILE_DEVICE_RPP, 0x90c, METHOD_BUFFERED, FILE_ANY_ACCESS)      /* Copy data from shared memory to device */
-#define RPP_IOCTL_XFER_FROM_DEV             CTL_CODE(FILE_DEVICE_RPP, 0x90d, METHOD_BUFFERED, FILE_ANY_ACCESS)	    /* Copy data from device to shared memory */
-#define RPP_IOCTL_GETINTERRUPTINFO          CTL_CODE(FILE_DEVICE_RPP, 0x90e, METHOD_BUFFERED, FILE_ANY_ACCESS)	    /* Get Interrupt info */
-#define RPP_IOCTL_MAP_AND_XFER_TO_DEV       CTL_CODE(FILE_DEVICE_RPP, 0x90f, METHOD_BUFFERED, FILE_ANY_ACCESS)	    /* User memory map and copy data to device */
-#define RPP_IOCTL_MAP_AND_XFER_FROM_DEV     CTL_CODE(FILE_DEVICE_RPP, 0x910, METHOD_BUFFERED, FILE_ANY_ACCESS)	    /* User memory map and copy data from device */
-#define RPP_IOCTL_USER_MEM_GET_SGLIST       CTL_CODE(FILE_DEVICE_RPP, 0x911, METHOD_BUFFERED, FILE_ANY_ACCESS)	    /* User mapped memory get sglist */
-#define RPP_IOCTL_USER_MEM_MAP_SGLIST       CTL_CODE(FILE_DEVICE_RPP, 0x912, METHOD_BUFFERED, FILE_ANY_ACCESS)	    /* User non-mapped memory map sglist */
-#define RPP_IOCTL_USER_MEM_UNMAP_SGLIST     CTL_CODE(FILE_DEVICE_RPP, 0x913, METHOD_BUFFERED, FILE_ANY_ACCESS)	    /* User non-mapped memory unmap sglist */
-#define RPP_IOCTL_SETPARAM                  CTL_CODE(FILE_DEVICE_RPP, 0x914, METHOD_BUFFERED, FILE_ANY_ACCESS)	    /* set some information for the card  */
-#define RPP_IOCTL_END                       CTL_CODE(FILE_DEVICE_RPP, 0x915, METHOD_BUFFERED, FILE_ANY_ACCESS)      /* end cdev IOCTL */
+
+/**
+ * @brief Cdev IOCTL codes
+ */
+#define RPP_IOCTL_START					    CTL_CODE(FILE_DEVICE_RPP, 0x900, METHOD_BUFFERED, FILE_ANY_ACCESS)      /**< start cdev IOCTL */
+#define RPP_IOCTL_GETPARAM				    CTL_CODE(FILE_DEVICE_RPP, 0x901, METHOD_BUFFERED, FILE_ANY_ACCESS)      /**< get some information from the card */
+#define RPP_IOCTL_BAR_MAP  				    CTL_CODE(FILE_DEVICE_RPP, 0x902, METHOD_BUFFERED, FILE_ANY_ACCESS)      /**< Bar map into User state */
+#define RPP_IOCTL_BAR_UNMAP  			    CTL_CODE(FILE_DEVICE_RPP, 0x903, METHOD_BUFFERED, FILE_ANY_ACCESS)	    /**< Bar unmap User state */
+#define RPP_IOCTL_KERNEL_MEM_ALLOC		    CTL_CODE(FILE_DEVICE_RPP, 0x904, METHOD_BUFFERED, FILE_ANY_ACCESS)		/**< Kernel memory use in PCIE DMA alloc(others memory alloc need to realize) */
+#define RPP_IOCTL_KERNEL_MEM_FREE		    CTL_CODE(FILE_DEVICE_RPP, 0x905, METHOD_BUFFERED, FILE_ANY_ACCESS)		/**< Kernel memory use in PCIE DMA free(others memory free need to realize) */
+#define RPP_IOCTL_KERNEL_MEM_MAP		    CTL_CODE(FILE_DEVICE_RPP, 0x906, METHOD_BUFFERED, FILE_ANY_ACCESS)		/**< Kernel memory map into User state */
+#define RPP_IOCTL_KERNEL_MEM_UNMAP		    CTL_CODE(FILE_DEVICE_RPP, 0x907, METHOD_BUFFERED, FILE_ANY_ACCESS)		/**< Kernel memory unmap User state */
+#define RPP_IOCTL_USER_MEM_MAP			    CTL_CODE(FILE_DEVICE_RPP, 0x908, METHOD_BUFFERED, FILE_ANY_ACCESS)		/**< User memory map into Kernel state */
+#define RPP_IOCTL_USER_MEM_UNMAP		    CTL_CODE(FILE_DEVICE_RPP, 0x909, METHOD_BUFFERED, FILE_ANY_ACCESS)		/**< User memory unmap Kernel state */
+#define RPP_IOCTL_USER_EVENTS_REGISTER	    CTL_CODE(FILE_DEVICE_RPP, 0x90a, METHOD_BUFFERED, FILE_ANY_ACCESS)		/**< User EventRegister for Kernel state */
+#define RPP_IOCTL_USER_EVENTS_UNREGISTER    CTL_CODE(FILE_DEVICE_RPP, 0x90b, METHOD_BUFFERED, FILE_ANY_ACCESS)		/**< User EventUnregister for Kernel state */	
+#define RPP_IOCTL_XFER_TO_DEV               CTL_CODE(FILE_DEVICE_RPP, 0x90c, METHOD_BUFFERED, FILE_ANY_ACCESS)      /**< Copy data from shared memory to device */
+#define RPP_IOCTL_XFER_FROM_DEV             CTL_CODE(FILE_DEVICE_RPP, 0x90d, METHOD_BUFFERED, FILE_ANY_ACCESS)	    /**< Copy data from device to shared memory */
+#define RPP_IOCTL_GETINTERRUPTINFO          CTL_CODE(FILE_DEVICE_RPP, 0x90e, METHOD_BUFFERED, FILE_ANY_ACCESS)	    /**< Get Interrupt info */
+#define RPP_IOCTL_MAP_AND_XFER_TO_DEV       CTL_CODE(FILE_DEVICE_RPP, 0x90f, METHOD_BUFFERED, FILE_ANY_ACCESS)	    /**< User memory map and copy data to device */
+#define RPP_IOCTL_MAP_AND_XFER_FROM_DEV     CTL_CODE(FILE_DEVICE_RPP, 0x910, METHOD_BUFFERED, FILE_ANY_ACCESS)	    /**< User memory map and copy data from device */
+#define RPP_IOCTL_USER_MEM_GET_SGLIST       CTL_CODE(FILE_DEVICE_RPP, 0x911, METHOD_BUFFERED, FILE_ANY_ACCESS)	    /**< User mapped memory get sglist */
+#define RPP_IOCTL_USER_MEM_MAP_SGLIST       CTL_CODE(FILE_DEVICE_RPP, 0x912, METHOD_BUFFERED, FILE_ANY_ACCESS)	    /**< User non-mapped memory map sglist */
+#define RPP_IOCTL_USER_MEM_UNMAP_SGLIST     CTL_CODE(FILE_DEVICE_RPP, 0x913, METHOD_BUFFERED, FILE_ANY_ACCESS)	    /**< User non-mapped memory unmap sglist */
+#define RPP_IOCTL_SETPARAM                  CTL_CODE(FILE_DEVICE_RPP, 0x914, METHOD_BUFFERED, FILE_ANY_ACCESS)	    /**< set some information for the card  */
+#define RPP_IOCTL_PREPARE_DEVICE            CTL_CODE(FILE_DEVICE_RPP, 0x915, METHOD_BUFFERED, FILE_ANY_ACCESS)	    /**< Init prepare device to available status */
+#define RPP_IOCTL_RELEASE_DEVICE            CTL_CODE(FILE_DEVICE_RPP, 0x916, METHOD_BUFFERED, FILE_ANY_ACCESS)	    /**< Exit release device to low power status  */
+#define RPP_IOCTL_DIRECT_DMA_READ           CTL_CODE(FILE_DEVICE_RPP, 0x917, METHOD_OUT_DIRECT, FILE_ANY_ACCESS)	/**< PCIe DMA direct read with single channel */
+#define RPP_IOCTL_DIRECT_DMA_WRITE          CTL_CODE(FILE_DEVICE_RPP, 0x918, METHOD_OUT_DIRECT, FILE_ANY_ACCESS)	/**< PCIe DMA direct write single channel */
+#define RPP_IOCTL_END                       CTL_CODE(FILE_DEVICE_RPP, 0x919, METHOD_BUFFERED, FILE_ANY_ACCESS)      /**< end cdev IOCTL */
 
 /**
  * @def Commonbuffer 0
@@ -58,9 +65,10 @@
 #define KERNEL_MEMTYPE_MEMORY					1
 #define KERNEL_MEMTYPE_CONTIGUOUSMEMORY			2	//maxsize <= 1GB
 #define KERNEL_MEMTYPE_POOL						3
-#define KERNEL_MEMTYPE_CONTIGUOUSSPACIFYCACHE	4	
+#define KERNEL_MEMTYPE_CONTIGUOUSSPACIFYCACHE	4	//maxsize <= 512MB
 
 /**
+ * @enum RPP_PARAMS_ENUM
  * The params.
  */
 typedef enum {
@@ -72,28 +80,54 @@ typedef enum {
 	RPP_GETPARAM_BLCONFIG = 5,
 	RPP_GETPARAM_PWR_MODE = 6,
 	RPP_GETPARAM_WORK_MODE = 7,
+	RPP_GETPARAM_IDLEDET_MODE = 8,
 
 	/* set params */
 	RPP_SETPARAM_PWR_MODE = (1 << 16),
 	RPP_SETPARAM_WORK_MODE = (2 << 16),
+	RPP_SETPARAM_IDLEDET_MODE = (3 << 16),
 	RPP_SETPARAM_OTHER_MODE = 0x7fff0000,
 } RPP_PARAMS_ENUM;
 
 #define RPP_SETPARAMS_MASK      0xFFFF0000
 
 /**
- * work mode
- */
-#define WORKMODE_DFS_BIT    0
-#define WORKMODE_VE_BIT     1
-#define WORKMODE_BOOST_BIT	2
+ * @brief work mode
+ */	
+#define WORKMODE_DFS_BIT    0	/**< Bit position of DFS mode, use 1 bit */
+#define WORKMODE_VE_BIT     1	/**< Bit Position of VE mode, use 1 bit */
+#define WORKMODE_BOOST_BIT	2	/**< Bit Position of BOOST mode, use 1 bit */
+#define WORKMODE_PERF_BIT	3	/**< Bit Position of Performance mode, use 4 bits */
 
-#define RPP_WORKMODE_DFS_DISABLE    (0x0 << WORKMODE_DFS_BIT)
-#define RPP_WORKMODE_DFS_ENABLE     (0x1 << WORKMODE_DFS_BIT)
-#define RPP_WORKMODE_VE_DISABLE     (0x0 << WORKMODE_VE_BIT)
-#define RPP_WORKMODE_VE_ENABLE      (0x1 << WORKMODE_VE_BIT)
-#define RPP_WORKMODE_BOOST_DISABLE	(0x0 << WORKMODE_BOOST_BIT)
-#define RPP_WORKMODE_BOOST_ENABLE	(0x1 << WORKMODE_BOOST_BIT)
+#define RPP_WORKMODE_DFS_DISABLE			(0x0 << WORKMODE_DFS_BIT)	
+#define RPP_WORKMODE_DFS_ENABLE				(0x1 << WORKMODE_DFS_BIT)
+#define RPP_WORKMODE_VE_DISABLE				(0x0 << WORKMODE_VE_BIT)
+#define RPP_WORKMODE_VE_ENABLE				(0x1 << WORKMODE_VE_BIT)
+#define RPP_WORKMODE_BOOST_DISABLE			(0x0 << WORKMODE_BOOST_BIT)
+#define RPP_WORKMODE_BOOST_ENABLE			(0x1 << WORKMODE_BOOST_BIT)
+#define RPP_WORKMODE_MODE0					(0x1 << WORKMODE_PERF_BIT)
+#define RPP_WORKMODE_MODE1					(0x2 << WORKMODE_PERF_BIT)
+#define RPP_WORKMODE_MODE2					(0x3 << WORKMODE_PERF_BIT)
+#define RPP_WORKMODE_MODE3					(0x4 << WORKMODE_PERF_BIT)
+#define	RPP_WORKMODE_MODE4					(0x5 << WORKMODE_PERF_BIT)
+#define RPP_WORKMODE_MODE5					(0x6 << WORKMODE_PERF_BIT)
+#define RPP_WORKMODE_MODE6					(0x7 << WORKMODE_PERF_BIT)
+#define RPP_WORKMODE_MODE7					(0x8 << WORKMODE_PERF_BIT)
+#define RPP_WORKMODE_MODE8					(0x9 << WORKMODE_PERF_BIT)
+#define RPP_WORKMODE_MODE9					(0xa << WORKMODE_PERF_BIT)
+#define RPP_WORKMODE_MODE10					(0xb << WORKMODE_PERF_BIT)
+
+#define RPP_PWRMODE_STOP_IDLEDET		0
+#define RPP_PWRMODE_RESUME_IDLEDET		1
+
+/**
+ * dynamic frequency scaling, 0:disable, 1:boost_dfs enable, 2, low_freq_dfs enable
+ * boost_dfs: the dynamic frequency is 1000/800/666/500/400/333/285/250/222/200 MHz
+ * low_freq_dfs: the dynamic frequency is 800/400/233/200/160/133/114/100/88.8/80 MHz 
+ */
+#define    RPP_DFS_MODE_DISABLE     0
+#define    RPP_DFS_MODE_BOOST       1
+#define    RPP_DFS_MODE_LOW_FREQ    2
 
  /**
   * power mode
@@ -101,8 +135,6 @@ typedef enum {
 typedef enum {
 	RPP_PWRMODE_WORKING = 0x0,
 	RPP_PWRMODE_LOW_POWER = 0x1,
-	RPP_PWRMODE_STANDBY = 0x2,
-	RPP_PWRMODE_RESUME = 0x3,
 } rpp_pwrmode_e;
 
 /*
@@ -543,10 +575,10 @@ int RppXferToDev(HANDLE hObject, LPVOID indata, DWORD insize, LPVOID outdata, DW
  * @param[in] hObject The handle of the Rpp device.
  * @param[in] indata The input buffer of type \c struct CdevDmaRequest, sent to the driver to specify the DMA transaction parameters.
  * @param[in] insize The size of the input buffer in bytes, which should be sufficient to contain the \c struct CdevDmaRequest.
- * @param[out] outdata The output buffer where the data read from the Rpp device will be stored. This should be a mapped memory region accessible by the driver.
- * @param[in] outsize The size of the output buffer in bytes, indicating the maximum amount of data to read.
+ * @param[out] outdata The output buffer, which may contain status or result information after the DMA transaction. If no output is expected, this can be NULL.
+ * @param[in] outsize The size of the output buffer in bytes. If no output is expected, this should be 0.
  *
- * @note The function assumes that the output buffer is properly mapped and prepared for DMA transfers. The caller is responsible for ensuring the buffer is large enough to hold the expected data.
+ * @note The function assumes that the transfer buffer is properly mapped and prepared for DMA transfers. The caller is responsible for ensuring the buffer is large enough to hold the expected data.
  *
  * @see struct CdevDmaRequest
  *
@@ -557,7 +589,7 @@ int RppXferToDev(HANDLE hObject, LPVOID indata, DWORD insize, LPVOID outdata, DW
  * struct CdevDmaRequest dmaRequest;
  * // ... (Initialize dmaRequest with the necessary information for the DMA transfer)
  * // Assume 'mappedBuffer' is a pointer to the mapped memory where data will be read.
- * int result = RppXferFromDev(hDevice, &dmaRequest, sizeof(dmaRequest), mappedBuffer, bufferSize);
+ * int result = RppXferFromDev(hDevice, &dmaRequest, sizeof(dmaRequest), NULL, 0);
  * if (result == 0) {
  *     // DMA transfer from device successful
  * } else {
@@ -573,10 +605,10 @@ int RppXferFromDev(HANDLE hObject, LPVOID indata, DWORD insize, LPVOID outdata, 
  * This function is used to scheduler and obtain interrupt information from the driver's FIFO, which is triggered by an MSI interrupt event.
  *
  * @param[in] hObject The handle of the Rpp device.
- * @param[out] outdata The output buffer of type \c struct rpp_int_info, where the interrupt information retrieved from the driver will be stored.
- * @param[in] outsize The size of the output buffer in bytes, which should be sufficient to hold the interrupt information.
  * @param[in] indata NULL, as this function does not require an input buffer.
  * @param[in] insize 0, as this function does not require an input buffer.
+ * @param[out] outdata The output buffer of type \c struct rpp_int_info, where the interrupt information retrieved from the driver will be stored.
+ * @param[in] outsize The size of the output buffer in bytes, which should be sufficient to hold the interrupt information.
  *
  * @note This function utilizes the MSI interrupt event to trigger the retrieval of interrupt information.
  *
@@ -587,7 +619,7 @@ int RppXferFromDev(HANDLE hObject, LPVOID indata, DWORD insize, LPVOID outdata, 
  * @code
  * // Sample usage:
  * struct rpp_int_info intInfo;
- * int result = RppGetInterruptInfo(hDevice, &intInfo, sizeof(intInfo), NULL, 0);
+ * int result = RppGetInterruptInfo(hDevice, NULL, 0, &intInfo, sizeof(intInfo));
  * if (result == 0) {
  *     // Successfully retrieved interrupt information
  * } else {
@@ -608,7 +640,7 @@ int RppGetInterruptInfo(HANDLE hObject, LPVOID indata, DWORD insize, LPVOID outd
  * @param[out] outdata Not used for this function. If provided, it should be NULL.
  * @param[in] outsize Not used for this function. Should be 0.
  *
- * @note The function assumes that the necessary memory has been mapped and is ready for DMA transfer. Any necessary synchronization or error checking should be handled before calling this function.
+ * @note The function assumes that the necessary memory has been allocated and is ready for DMA transfer. Any necessary synchronization or error checking should be handled before calling this function.
  *
  * @see struct CdevDmaRequest
  *
@@ -637,10 +669,10 @@ int RppMemoryMapAndXferToDev(HANDLE hObject, LPVOID indata, DWORD insize, LPVOID
  * @param[in] hObject The handle of the Rpp device.
  * @param[in] indata The input buffer of type \c struct CdevDmaRequest, which contains the configuration for the DMA transaction to be executed by the driver.
  * @param[in] insize The size of the input buffer in bytes, which should be sufficient to contain the \c struct CdevDmaRequest.
- * @param[out] outdata The output buffer where the data read from the Rpp device will be stored. This buffer must be mapped to the user space and prepared for DMA operations.
- * @param[in] outsize The size of the output buffer in bytes, indicating the amount of data to read from the device.
+ * @param[out] outdata Not used for this function. If provided, it should be NULL.
+ * @param[in] outsize Not used for this function. Should be 0.
  *
- * @note The caller must ensure that the output buffer is properly mapped for DMA and the size is appropriate for the expected data transfer.
+ * @note The caller must ensure that the transfer buffer is properly allocated for DMA and the size is appropriate for the expected data transfer.
  *
  * @see struct CdevDmaRequest
  *
@@ -651,7 +683,7 @@ int RppMemoryMapAndXferToDev(HANDLE hObject, LPVOID indata, DWORD insize, LPVOID
  * struct CdevDmaRequest dmaRequest;
  * // ... (Initialize dmaRequest with the necessary information for the DMA transfer)
  * // Assume 'mappedBuffer' is a pointer to the user space memory where data will be stored after DMA read.
- * int result = RppMemoryMapAndXferFromDev(hDevice, &dmaRequest, sizeof(dmaRequest), mappedBuffer, bufferSize);
+ * int result = RppMemoryMapAndXferFromDev(hDevice, &dmaRequest, sizeof(dmaRequest), NULL, 0);
  * if (result == 0) {
  *     // DMA transfer from device to user space memory successful
  * } else {
@@ -766,7 +798,7 @@ int RppMemoryUnmapSGList(HANDLE hObject, LPVOID indata, DWORD insize, LPVOID out
 /**
  * @brief Sets the Rpp device work mode and power mode.
  *
- * This function sends configuration parameters to the Rpp device driver to set the device's work mode (such as DFS - Dynamic Frequency Scaling, VE - Vector Engine, or Boost mode) and power mode.
+ * This function sends configuration parameters to the Rpp device driver to set the device's work mode (such as DFS - Dynamic Frequency Scaling, VE - Vector Engine, Boost mode or Performance mode) and power mode.
  *
  * @param[in] hObject The handle of the Rpp device.
  * @param[in] indata The input buffer of type \c struct rpp_param_info, which contains the configuration parameters for setting the specific mode. This buffer is sent to the driver.
@@ -796,6 +828,132 @@ int RppMemoryUnmapSGList(HANDLE hObject, LPVOID indata, DWORD insize, LPVOID out
  * @endcode
  */
 int RppSetParameter(HANDLE hObject, LPVOID indata, DWORD insize, LPVOID outdata, DWORD outsize);				/* Set Rpp device mode(Power/Work) */
+
+/**
+ * @brief Device initialization before preparing to use the device.
+ * 
+ * This function will restore the device from low-power mode to working mode, and the implementation of the recovery process depends on the low-power support characteristics of the board and host.
+ * 
+ * @param[in] hObject The handle of the Rpp device.
+ * @param[in] indata The input buffer no used, set to NULL.
+ * @param[in] insize The size of the input buffer in bytes, it will be zero.
+ * @param[out] outdata The output buffer no used, set to NULL.
+ * @param[in] outsize The size of the output buffer in bytes, it will be zero.
+ * 
+ * @note This processing may depend on the Rpp device and driver implementation.
+ *
+ * @see None
+ * 
+ * @return On success, the ioctl process in the driver returns 0. On failure, a non-zero error code is returned.
+ * 
+ * @code
+ * // Sample usage:
+ *
+ * // Rpp device preparation.
+ * int result = RppPrepareDevice(hDevice, NULL, 0, NULL, 0);
+ * if (result == 0) {
+ *     // Successfully make the device ready.
+ * } else {
+ *     // Handle error in making the device ready.
+ * }
+ * @endcode
+ */
+int RppPrepareDevice(HANDLE hObject, LPVOID indata, DWORD insize, LPVOID outdata, DWORD outsize);
+
+/**
+ * @brief When the device is no longer in use, it should be released before shutting it down.
+ * 
+ * This function will cause the device to return from working mode to low-power mode if there are no applications continuing to use the device. The return of low-power processing depends on the low-power characteristics supported by the board and host.
+ * 
+ * @param[in] hObject The handle of the Rpp device.
+ * @param[in] indata The input buffer no used, set to NULL.
+ * @param[in] insize The size of the input buffer in bytes, it will be zero.
+ * @param[out] outdata The output buffer no used, set to NULL.
+ * @param[in] outsize The size of the output buffer in bytes, it will be zero.
+ * 
+ * @note This processing may depend on the Rpp device and driver implementation.
+ *
+ * @see None
+ *
+ * @return On success, the ioctl process in the driver returns 0. On failure, a non-zero error code is returned.
+ *
+ * @code
+ * // Sample usage:
+ *
+ * // Rpp device release.
+ * int result = RppReleaseDevice(hDevice, NULL, 0, NULL, 0);
+ * if (result == 0) {
+ *     // Successfully make the device idle.
+ * } else {
+ *     // Handle error in making the device idle.
+ * }
+ * @endcode
+ */
+int RppReleaseDevice(HANDLE hObject, LPVOID indata, DWORD insize, LPVOID outdata, DWORD outsize);
+
+/**
+ * @brief Reads data from the Rpp device using a PCIe DMA transfer from the host memory.
+ *
+ * This function configures and initiates a DMA transfer over PCIe to read data from the Rpp device into a memory area using single channel.
+ *
+ * @param[in] hObject The handle of the Rpp device.
+ * @param[in] indata The input buffer of type \c struct CdevDmaRequest, sent to the driver to specify the DMA transaction parameters.
+ * @param[in] insize The size of the input buffer in bytes, which should be sufficient to contain the \c struct CdevDmaRequest.
+ * @param[out] outdata The output buffer, which wiil be stored DMA read data.
+ * @param[in] outsize The size of the output buffer in bytes. 
+ *
+ * @note The function assumes that the transfer buffer is properly allocated and prepared for DMA transfers. The caller is responsible for ensuring the buffer is large enough to hold the expected data.
+ *
+ * @see struct CdevDmaRequest
+ *
+ * @return On success, the ioctl process in the driver returns 0. On failure, a non-zero error code is returned to indicate the nature of the error.
+ *
+ * @code
+ * // Sample usage:
+ * struct CdevDmaRequest dmaRequest;
+ * // ... (Initialize dmaRequest with the necessary information for the DMA transfer)
+ * // Assume 'buffer' is a pointer to the transfer memory where data will be read.
+ * int result = RppDirectDMARead(hDevice, &dmaRequest, sizeof(dmaRequest), buffer, bufferSize);
+ * if (result == 0) {
+ *     // DMA transfer from device successful
+ * } else {
+ *     // Handle transfer failure
+ * }
+ * @endcode
+ */
+int RppDirectDMARead(HANDLE hObject, LPVOID indata, DWORD insize, LPVOID outdata, DWORD outsize);
+
+/**
+ * @brief Performs a DMA transfer to write host memory to the Rpp device.
+ *
+ * This function initiates a DMA transfer over PCIe to write data from a memory area allocated into user space to the Rpp device. It is used for efficient data transfer between host memory and device memory.
+ *
+ * @param[in] hObject The handle of the Rpp device.
+ * @param[in] indata The input buffer of type \c struct CdevDmaRequest, which contains the configuration for the DMA transaction to be executed by the driver.
+ * @param[in] insize The size of the input buffer in bytes, which should be sufficient to hold the \c struct CdevDmaRequest.
+ * @param[out] outdata The output buffer, which will be store DMA write data.
+ * @param[in] outsize The size of the output buffer in bytes.
+ *
+ * @note The specific requirements for the input and output buffers are determined by the driver and the DMA transaction details.
+ *
+ * @see struct CdevDmaRequest
+ *
+ * @return On success, the ioctl process in the driver returns 0. On failure, a non-zero error code is returned.
+ *
+ * @code
+ * // Sample usage:
+ * struct CdevDmaRequest dmaRequest;
+ * // ... (Initialize dmaRequest with the necessary information for the DMA transfer)
+ * // Assume 'buffer' is a pointer to the transfer memory where data will be write.
+ * int result = RppDirectDMAWrite(hDevice, &dmaRequest, sizeof(dmaRequest), buffer, bufferSize);
+ * if (result == 0) {
+ *     // DMA transfer to device successful
+ * } else {
+ *     // Handle transfer failure
+ * }
+ * @endcode
+ */
+int RppDirectDMAWrite(HANDLE hObject, LPVOID indata, DWORD insize, LPVOID outdata, DWORD outsize);
 	
 /*
  * Defines a structure to encapsulate event request information for the Rpp device.
@@ -829,6 +987,22 @@ struct CdevBarInfo {
 struct rpp_param_info {
 	UINT64 param;            /**< Parameter identifier, referring to values defined in RPP_PARAMS_ENUM. */
 	UINT8 value[128];        /**< Buffer to hold the data for send or receive operations related to the parameter. */
+};
+
+/*
+ * Defines a structure to hold idle parameter information for an RPP device.
+ * This structure is used to set or get various configuration parameters
+ * of the RPP device, with the specific parameter defined by an enumerator.
+ */
+struct rpp_idle_states {
+	UINT32 enable;				/**< [In/Out] idle enable / idle state */
+	UINT32 flag;				/**< [In/Out] force setting / d3coldsupport */
+	UINT32 device_healthy;		/**< device available flags:
+								  * bit0: PCIe Link reset is 0 but normal is 1
+									   device PCIe Link Gen3--> Gen1 or Gen1 --> Gen3 workaround bug fix
+								  * bit1: Mpu firmware load failed or not loaded is 0, loaded success is 1
+								  * bit[2:31]: reserved */
+	UINT32 driver_version;		/**< Driver version */
 };
 
 /*
@@ -923,34 +1097,64 @@ struct rpp_int_info {
 	UINT32 int_info2;   /**< Additional interrupt information 2 (purpose should be documented). */
 	UINT32 int_info3;   /**< Additional interrupt information 3 (purpose should be documented). */
 	UINT32 int_desc[8]; /**< Array of 8 interrupt descriptors, each providing further details about the interrupt. */
+	struct timespec64 {
+		LONGLONG tv_sec;	/**< seconds */
+		LONG tv_nsec;		/**< nanoseconds */
+	} isr_kts;
 };
 
-//-----------------------------------------------------------------------------
+/* 
+ * Define a structure to obtain configuration information of the board.
+ */
 typedef struct ee_control_header_struct_t {
 	UINT16 magic_number;
 	UINT16 size;
-	UINT16 version;
-	UINT16 board_info;// 0x0000 - dudi, 0x0001 - v4, 0x0002 - M3, 0x0003 - M5, 0x0004 - A4
-	UINT32 maxnum_ddrsize_gen_lane_barsize;
+	UINT16 version;		// 3
+	UINT16 board_info;  // 0x0000 - dudi, 0x0001 - v4, 0x0002 - M3, 0x0003 - M5, 0x0004 - A4, 0x0005 - A8, 0x0006 - A9_V1, 0x0007 - A9_V2 (board version)
+
 	/*
-	**bit[3:0]:MaxNumDDR 1 or 4;
-	**bit[11:4]:ddrsize;//0001 - 1GB, 0010 - 2GB, 0100 - 4GB, 1000 - 8GB, 10000 - 16GB 10000 - 32GB 100000 - 64GB
-	**bit[15:12]:PCIeGen; // Gen2 or Gen3
-	**bit[19:16]:PCIe_lane; //0x1 �C x1, 0x2 �C x2, 0x4 - x4
-	**bit[23:20]:bar_size, 0 �C normal, 1 �C small bar
-	**bit[31:24]:resv
-	*/
+	 * @brief board basic configurations.
+	 * 
+	 * bit[3:0]:MaxNumDDR 1 or 4;
+	 * bit[11:4]:ddrsize;//0001 - 1GB, 0010 - 2GB, 0100 - 4GB, 1000 - 8GB, 10000 - 16GB 10000 - 32GB 100000 - 64GB
+	 * bit[15:12]:PCIeGen; // Gen2 or Gen3
+	 * bit[19:16]:PCIe_lane; //0x1 – x1, 0x2 – x2, 0x4 - x4
+	 * bit[23:20]:bar_size, 0 – normal, 1 – small bar
+	 * bit[27:24]:wdt_en, 0 – disable, 1 – enable
+	 * bit[31:28]:chip_version; // 0 - r8, 1 - r9
+	 */
+	UINT32 board_mn;
+
+	/*
+	 * @brief frequency setting parameters.
+	 * 
+	 * bit[11:0]:MaxRppFreq;// 600MHz, 800MHz, 1000MHz bit[31]:BoostModeCap; // =1: enable boost mode, =0: disable boost mode. Cannot set to '1' if MaxRppFreq<1GHz
+	 * bit[23:12]:DefFreq; // 600MHz, 800MHz, 1000MHz --> max pll1 frequency for setworkmode
+	 * bit[30:24]:BoostModeTriggerLimit; // When GPU loading reaches this limit,then trigger the boost // =0:no limit, =1: 15%, =2: 30%, =3: 45%, =4:60%, =5: 75%, =6: 90%, =7: 100%
+	 * bit[31]: BoostModeCap; // =1: enable boost mode, =0: disable boost mode. Cannot set to '1' if MaxRppFreq<1GHz
+	 */
 	UINT32 freq;
-	/*
-	**bit[11:0]:MaxRppFreq;// 600MHz, 800MHz, 1000MHzbit[31]:BoostModeCap; // =1: enable boost mode, =0: disable boost mode. Cannot set to '1' if MaxRppFreq<1GHz
-	**bit[23:12]:DefFreq; // 600MHz, 800MHz, 1000MHz
-	**bit[30:24]:BoostModeTriggerLimit; // When GPU loading reaches this limit,then trigger the boost // =0:no limit, =1: 15%, =2: 30%, =3: 45%, =4:60%, =5: 75%, =6: 90%, =7: 100%
-	**bit[31]: BoostModeCap; // =1: enable boost mode, =0: disable boost mode. Cannot set to '1' if MaxRppFreq<1GHz
-	*/
+	
+
 	UINT32   sn[4];
 	UINT32   date;
+
+	/*
+	 * @brief temperature line parameters.
+	 * 
+	 * bit[7:0]:The temperature that triggers the fan to turn on while waiting for sema;//97
+	 * bit[15:8]:The temperature that triggers shutdown while waiting for sema; // 104
+	 * bit[27:16]:ddr vendor; // 0: micron; 1: samsung;
+	 * bit[31:28]: ddr protocol; // 0: lpddr4; 1; lpddr4x
+	 */
 	UINT32   main_boot_temp_monitor;
+
+	UINT32   pci_device_id_vendor_id;
+	UINT32   pci_subsystem_id_subsystem_vendor_id;
+	UINT32   pci_class_code_revision_id;
+	UINT32   resv[3];
 } EE_CONTROL_HDR, * EE_CONTROL_HDR_PTR;
+
 
 /*
  * Represents a physical memory element with its continuous physical address, length,

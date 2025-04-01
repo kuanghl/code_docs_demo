@@ -32,69 +32,6 @@
 //
 
 /**
- * @brief Opens a Rpp device using hardware and software identifiers.
- *
- * This function attempts to open a Rpp device by specifying its hardware ID
- * (composed of a vendor ID and a device ID) and a software ID, which is the
- * system's enumeration of the device's ID. Successful opening of the device
- * provides a handle that can be used for subsequent operations.
- *
- * @param[in] vendor_id The vendor ID of the PCIe device, used to identify the manufacturer.
- * @param[in] device_id The device ID of the PCIe device, used to identify the specific device model.
- * @param[in] id The system-assigned unique ID for the enumeration of devices.
- *
- * @note Additional notes on usage, limitations, or requirements can be added here.
- *
- * @return If the operation is successful, the function returns a valid Rpp device handle.
- *         If the operation fails, the function returns NULL.
- *
- * @code
- * // Sample usage:
- * WORD vendorId = 0x1234; // Example vendor ID
- * WORD deviceId = 0x5678; // Example device ID
- * LONG deviceIdSys = 1;   // Example system enumeration ID
- *
- * HANDLE deviceHandle = RppOpenDevice(vendorId, deviceId, deviceIdSys);
- * if (deviceHandle != NULL) {
- *     // Successfully opened the Rpp device, proceed with operations using the handle.
- * } else {
- *     // Handle error, failed to open the Rpp device.
- * }
- * @endcode
- */
-HANDLE RppOpenDevice(WORD vendor_id, WORD device_id, LONG id);
-
-/**
- * @brief Opens a Rpp device using a software identifier and a device filename.
- *
- * This function attempts to open a Rpp device by specifying a software ID and
- * a filename associated with the device. The filename is used for callback purposes
- * within the driver. The function is used to obtain a device handle for further
- * communication with the Rpp device.
- *
- * @param[in] id The system-assigned unique ID for the enumeration of devices.
- * @param[in] filename The device filename used for callback operations in the driver.
- *
- * @note The current implementation does not support this function.
- *
- * @return Upon success, the function returns 0. If the operation fails, the function returns -1.
- *
- * @code
- * // Sample usage:
- * LONG deviceIdSys = 1;   // Example system enumeration ID
- * CHAR* deviceFileName = "rpp_device_file"; // Example filename
- *
- * int result = RppOpenDeviceFile(deviceIdSys, deviceFileName);
- * if (result == 0) {
- *     // Successfully opened the Rpp device file, proceed with further operations.
- * } else {
- *     // Handle error, failed to open the Rpp device file.
- * }
- * @endcode
- */
-HANDLE RppOpenDeviceFile(LONG id, CHAR* filename);
-
-/**
  * @brief Opens a specified number of Rpp devices or enumerates all Rpp devices in the system.
  *
  * This function can be used to open a specified number of Rpp devices by providing an array to store the device handles.
@@ -130,6 +67,35 @@ HANDLE RppOpenDeviceFile(LONG id, CHAR* filename);
 int RppEnumAllDevices(HANDLE* hd, int num);
 
 /**
+ * @brief Opens a Rpp device using hardware and software identifiers.
+ *
+ * This function attempts to open a Rpp device by specifying its hardware ID
+ * (composed of a vendor ID and a device ID) and a software ID, which is the
+ * system's enumeration of the device's ID. Successful opening of the device
+ * provides a handle that can be used for subsequent operations.
+ *
+ * @param[in] id The system-assigned unique ID for the enumeration of devices.
+ *
+ * @note Additional notes on usage, limitations, or requirements can be added here.
+ *
+ * @return If the operation is successful, the function returns a valid Rpp device handle.
+ *         If the operation fails, the function returns NULL.
+ *
+ * @code
+ * // Sample usage:
+ * LONG deviceIdSys = 1;   // Example system enumeration ID
+ *
+ * HANDLE deviceHandle = RppOpenDevice(deviceIdSys);
+ * if (deviceHandle != NULL) {
+ *     // Successfully opened the Rpp device, proceed with operations using the handle.
+ * } else {
+ *     // Handle error, failed to open the Rpp device.
+ * }
+ * @endcode
+ */
+HANDLE RppOpenDevice(LONG id);
+
+/**
  * @brief Closes an open Rpp device.
  *
  * This function is used to close a previously opened Rpp device, freeing any associated resources.
@@ -154,5 +120,63 @@ int RppEnumAllDevices(HANDLE* hd, int num);
  * @endcode
  */
 int RppCloseDevice(HANDLE hObject);
+
+/**
+ * @brief Opens a Rpp device using a software identifier and a device filename.
+ *
+ * This function attempts to open a Rpp device by specifying a software ID and
+ * a filename associated with the device. The filename is used for callback purposes
+ * within the driver. The function is used to obtain a device handle for further
+ * communication with the Rpp device.
+ *
+ * @param[in] id The system-assigned unique ID for the enumeration of devices.
+ * @param[in] filename The device filename used for callback operations in the driver.
+ *
+ * @note The current implementation does not support this function.
+ *
+ * @return Upon success, the function returns 0. If the operation fails, the function returns -1.
+ *
+ * @code
+ * // Sample usage:
+ * LONG deviceIdSys = 1;   // Example system enumeration ID
+ * CHAR* deviceFileName = "rpp_device_file"; // Example filename
+ *
+ * int result = RppOpenDeviceFile(deviceIdSys, deviceFileName);
+ * if (result == 0) {
+ *     // Successfully opened the Rpp device file, proceed with further operations.
+ * } else {
+ *     // Handle error, failed to open the Rpp device file.
+ * }
+ * @endcode
+ */
+HANDLE RppOpenDeviceFile(LONG id, CHAR* filename);
+
+/**
+ * @brief Get a Rpp device path using a software identifier.
+ *
+ * This function attempts to get a Rpp device path by specifying a software ID. 
+ *
+ * @param[in] id The system-assigned unique ID for the enumeration of devices.
+ * @param[in, out] devpath The buffer use for storing the device path that includes Instance ID and PCIe Device ID and GUID.
+ * @param[in] len The length of the buffer use for storing the device path.
+ *
+ * @note Additional notes on usage, limitations, or requirements can be added here.
+ *
+ * @return Get success, the function returns 0. If the operation fails, the function returns -1.
+ *
+ * @code
+ * // Sample usage:
+ * LONG deviceIdSys = 1;   // Example system enumeration ID
+ * CHAR devicePath[512] = { 0 }; // Example device path buffer
+ *
+ * int result = RppGetDevicePath(deviceIdSys, &devicePath, sizeof(devicePath));
+ * if (result == 0) {
+ *     // Successfully get the Rpp device path, proceed with further operations.
+ * } else {
+ *     // Handle error, failed to open the Rpp device file.
+ * }
+ * @endcode
+ */
+int RppGetDevicePath(LONG id, CHAR* devpath, size_t len);
 
 #endif // !__LL_DEV_H__
