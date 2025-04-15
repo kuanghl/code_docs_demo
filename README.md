@@ -10,6 +10,7 @@ See the documentation [here](https://code-docs-demo.readthedocs.io/en/latest/)
 - [Sphinx](https://www.sphinx-doc.org/en/master/usage/installation.html)
 - [Breathe](https://pypi.org/project/breathe/)
 - [sphinx_rtd_theme](https://github.com/rtfd/sphinx_rtd_theme)
+- [other local theme](./local_docs/README.md)
 
 ```sh
 # Windows
